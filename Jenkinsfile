@@ -6,9 +6,15 @@ pipeline {
 
     tools {
         nodejs 'node'
+        dockerTool:'docker'
     }
     triggers{
         githubPush()
+    }
+
+   environment {
+      DOCKERHUB_CREDENTIALS = credentials('my_dockerhub_creds')
+      IMAGE_NAME = 'stkraych/mynodejsapp'
     }
 
     stages {
@@ -40,6 +46,28 @@ pipeline {
                 sh 'npm install -g forever'
                 sh 'forever start src/index.js'
            }
+        }
+
+
+       stage('Docker login'){
+           steps {
+               sh 'docker login -u $DOCKERHUB_CREDENTIALS -p $DOCKERHUB_CREDENTIALS'
+	   }
+        }
+
+        stage('Docker build and tag'){
+            steps {
+                sh 'docker build -t ${IMAGE_NAME} -f Dockerfile .'
+                sh 'docker tag ${IMAGE_NAME} ${IMAGE_NAME}:${BUILD_NUMBER}'
+            }
+        }
+
+	stage('Docker Push'){
+            steps {
+              sh 'docker push ${IMAGE_NAME}:${BUILD_NUMBER}'
+            }
+        }
+          
         }
     }
 }
