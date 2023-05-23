@@ -9,9 +9,16 @@ pipeline {
     }
 
     stages {
+
+        stage('Clean') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage('Clone Repo') {
             steps {
-                git branch: 'main', url: 'https://github.com/stoenpav/nodejs-my-proj.git'
+                git branch: 'main', url: 'https://github.com/stkraych/nodejs-my-proj.git'
             }
         }
         stage('Build') {
@@ -30,11 +37,5 @@ pipeline {
                 sh 'forever start src/index.js'
            }
         }
-    }
-
-    post {
-      always {
-         cleanWs()
-      }
     }
 }
