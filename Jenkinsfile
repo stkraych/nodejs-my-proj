@@ -24,5 +24,9 @@ pipeline {
                 sh 'npm test' //This is for testing the nodejs modules
             }
         }
+        stage('Deploy') {
+           steps {
+                sh 'forever start src/index.js'
+        }
     }
 }
