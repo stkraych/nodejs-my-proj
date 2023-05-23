@@ -13,7 +13,7 @@ pipeline {
     }
 
    environment {
-      DOCKERHUB_CREDENTIALS = credentials('my_dockerhub_creds')
+      DOCKERHUB_CREDENTIALS = credentials('docker_id')
       IMAGE_NAME = 'stkraych/mynodejsapp'
     }
 
