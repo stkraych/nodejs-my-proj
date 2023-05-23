@@ -4,7 +4,7 @@ pipeline {
         label 'mygroupagent'
     }
 
-    tools {
+    tools{
         nodejs 'node'
         dockerTool:'docker'
     }
