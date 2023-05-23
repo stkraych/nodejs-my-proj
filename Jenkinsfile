@@ -70,7 +70,7 @@ pipeline {
     stage('Docker Deploy'){
         steps{
             sh 'docker container rm -f mynodejsapp || true'
-            sh 'docker container run -d -p 3000:3000 --name mynodejsapp stkraych/mynodejsapp'
+            sh 'docker container run -d -p 4000:4000 --name mynodejsapp stkraych/mynodejsapp'
         }
     }
           
